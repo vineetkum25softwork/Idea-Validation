@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Product Idea Viewer</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f5;
+        }
+
+        .head-card {
+            max-width: 80%;
+            margin: auto;
+            background-color: white;
+            border-radius: 15px;
+        }
+
+        .tooltip-div {
+            width: 100%;
+            margin: 2rem auto 0 auto;
+            background-color: rgba(237, 234, 240, 0.95);
+            border-radius: 15px;
+            padding: 1.5rem;
+            text-align: center;
+            position: relative;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+            min-height: 8in;
+            display: none; /* Initially hide the tooltip using display: none */
+        }
+
+        .tooltip-div.show {
+            opacity: 1;
+            visibility: visible;
+            display: block; /* Show the tooltip when 'show' class is added */
+        }
+
+        .tooltip-div::before {
+            content: '';
+            position: absolute;
+            top: -70px;
+            left: 38%;
+            transform: translateX(-50%);
+            border-width: 0 20px 80px 20px;
+            border-style: solid;
+            border-color: transparent transparent rgba(237, 234, 240, 0.95) transparent;
+            z-index: 1;
+        }
+
+        .tooltip-div::after {
+            content: '';
+            position: absolute;
+            top: -71px;
+            left: 35%;
+            transform: translateX(-50%);
+            border-width: 0 21px 81px 21px;
+            border-style: solid;
+            border-color: transparent transparent rgba(0, 0, 0, 0.1) transparent;
+            z-index: 0;
+            border: 0;
+        }
+
+        .sheet-view-container {
+            min-height: 5in;
+            overflow: hidden;
+            margin: auto;
+            margin-top: 1rem;
+            position: relative;
+            /* Prevent text selection during drag */
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+        }
+
+        .sheet-view {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+            align-items: center;
+            padding: 20px 0;
+            cursor: grab;
+            /* Indicate draggable */
+        }
+
+        .sheet-view.grabbing {
+            cursor: grabbing;
+            /* Indicate dragging */
+        }
+
+        .sheet-item {
+            min-width: 3.5in;
+            height: 4in;
+            background-color: #e1cff8;
+            border-radius: 15px;
+            margin: 0 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #333;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: all 0.5s ease-in-out;
+            flex-shrink: 0;
+        }
+
+        .sheet-item.center {
+            min-width: 4in;
+            height: 4.5in;
+            background-color: #ffffff;
+            color: rgb(59, 59, 59);
+            transform: scale(1.1);
+        }
+
+        .sheet-item.left-visible,
+        .sheet-item.right-visible {
+            opacity: 0.7;
+            transform: scale(0.95);
+        }
+
+        .static-card {
+            min-width: 3.5in;
+            height: 4in;
+            border-radius: 10px;
+        }
+
+        .width-80 {
+            width: 80%;
+            margin: auto;
+        }
+
+        .describe-text {
+            font-size: 18px;
+            /* Default for large screens */
+        }
+
+        /* New CSS for the line separator */
+        .section-separator {
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            margin-top: 5rem;
+            margin-bottom: 5rem;
+        }
+
+        @media (max-width: 992px) {
+            /* Medium devices (desktops, 992px and down) */
+            .describe-text {
+                font-size: 17px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            /* Small devices (tablets and below, 768px and down) */
+            .head-card {
+                max-width: 100%;
+            }
+
+            .width-80 {
+                width: 100%;
+            }
+
+            .describe-text {
+                font-size: 16px;
+                /* Smallest for mobile */
+            }
+
+            /* Adjust margins for mobile view */
+            .section-separator {
+                margin-top: 3rem;
+                margin-bottom: 3rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="head-card">
+        <div class="head-content p-5 text-center">
+            <header class="mb-4">
+                <h1 class="fs-4 fw-semibold" style="color: blueviolet;">IdValid</h1>
+            </header>
+            <h2 class="display-6 fw-bold text-dark mb-4">Product Idea Validation Sheet</h2>
+            <p class="fs-5 text-muted mb-5 mx-3">Quickly check your product or service idea before investing significant
+                time or money.</p>
+            <div class="d-flex flex-column flex-sm-row justify-content-center gap-3">
+                <a href="#" class="btn btn-outline-primary fw-semibold py-3 px-5 rounded-3 shadow-sm order-2 order-sm-1"
+                    id="learnMoreBtn">Learn More</a>
+                <a href="/sheet/" class="btn btn-primary fw-semibold py-3 px-5 rounded-3 shadow-sm order-1 order-sm-2">Open
+                    Sheet</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="tooltip-div" id="tooltipDiv">
+        <div class="learndiv">
+            <div class="width-80">
+                <h2 class=" fs-4 fw-bolder ">What Inside Sheet ?</h2>
+                <br><br>
+                <h3 class=" describe-text">Important Questions & Writing Space For Idea Validation</h3>
+                <br><br>
+                <div class="sheet-view-container">
+                    <div class="sheet-view" id="sheetView"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-separator"></div>
+
+        <div class="learndiv">
+            <div class="width-80">
+                <h2 class=" fs-4 fw-bolder ">Example</h2>
+                <br><br>
+                <h3 class="describe-text">Suppose you want to open bakery store. </h3>
+                <br><br>
+            </div>
+        </div>
+
+        <div class="section-separator"></div>
+
+        <div class="learndiv">
+            <div class="width-80">
+                <h2 class=" fs-4 fw-bolder ">Free PDF Download</h2>
+                <br><br>
+                <h3 class="describe-text">After you fill it out, you can download your finished sheet as a PDF file. </h3>
+                <h3 class="describe-text">This
+                    lets you keep a personal record, share it easily, or print it out for offline use.</h3>
+                <br><br>
+            </div>
+        </div>
+
+        <div class="section-separator"></div>
+
+        <div class="learndiv">
+            <div class="width-80">
+                <h2 class=" fs-4 fw-bolder ">No Login Required</h2>
+                <br><br>
+                <h3 class="describe-text">Use this tool without login.</h3>
+                <h3 class="describe-text">We don't collect your data as you don't have to log in.</h3>
+                <br><br>
+            </div>
+        </div>
+
+        <div class="section-separator"></div>
+
+        <div class="learndiv">
+            <div class="width-80">
+                <h2 class=" fs-4 fw-bolder ">Never Lose What You Write!</h2>
+                <br><br>
+                <h3 class="describe-text">Your answers save automatically in your browser's local storage.</h3>
+                <h3 class="describe-text">Close the page and come back later – your work will be here!</h3>
+                <br><br>
+            </div>
+        </div>
+    </div>
+    <br><br><br>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const learnMoreBtn = document.getElementById('learnMoreBtn');
+            const tooltipDiv = document.getElementById('tooltipDiv');
+            const sheetView = document.getElementById('sheetView');
+            const numDivs = 8; // Total number of original divs (Div 1 to Div 8)
+            let currentIndex; // Will hold the index of the currently centered div in the sheetView
+            let scrollInterval;
+            const numClones = numDivs; // Number of items to clone from each end for infinite loop
+
+            // Variables for manual dragging/swiping
+            let isDragging = false;
+            let startX; // Initial X position of mouse/touch
+            let currentTranslate; // Current translateX value during drag
+            let prevTranslate; // translateX value at the start of the drag
+            let animationId; // For requestAnimationFrame
+
+            /**
+             * Creates the sheet items, including original divs and their clones
+             * to enable infinite scrolling.
+             * The structure will be: [clones of last N divs, original divs, clones of first N divs]
+             */
+            function createSheetItems() {
+                sheetView.innerHTML = ''; // Clear existing items
+                const originalDivs = [];
+
+                // Create original divs (Div 1 to Div 8)
+                for (let i = 0; i < numDivs; i++) {
+                    const div = document.createElement('div');
+                    div.classList.add('sheet-item');
+                    div.textContent = `Div ${i + 1}`;
+                    originalDivs.push(div);
+                }
+
+                const allItems = [];
+
+                // Add clones of the last 'numClones' original items to the beginning of the list
+                // This creates a buffer for scrolling backwards (not explicitly requested but good for robustness)
+                for (let i = numDivs - numClones; i < numDivs; i++) {
+                    const clone = originalDivs[i].cloneNode(true);
+                    allItems.push(clone);
+                }
+
+                // Add the original items
+                originalDivs.forEach(item => allItems.push(item));
+
+                // Add clones of the first 'numClones' original items to the end of the list
+                // This creates the buffer for infinite scrolling from right to left
+                for (let i = 0; i < numClones; i++) {
+                    const clone = originalDivs[i].cloneNode(true);
+                    allItems.push(clone);
+                }
+
+                // Append all prepared items to the sheet view
+                allItems.forEach(item => sheetView.appendChild(item));
+
+                // Set the initial currentIndex to point to the first actual original item (Div 1)
+                // This is after the initial set of cloned items
+                currentIndex = numClones;
+            }
+
+            /**
+             * Updates the visual position of the sheet items based on currentIndex.
+             * Also applies 'center', 'left-visible', 'right-visible' classes.
+             */
+            function updateSheetView() {
+                const items = Array.from(sheetView.children);
+                if (items.length === 0) return;
+
+                // Calculate the width of a single item including its margins
+                const itemStyle = getComputedStyle(items[0]);
+                const itemWidth = items[0].offsetWidth + parseFloat(itemStyle.marginLeft) + parseFloat(itemStyle.marginRight);
+
+                // Calculate the offset needed to center the current item
+                const offset = -currentIndex * itemWidth + (sheetView.offsetWidth / 2) - (itemWidth / 2);
+                sheetView.style.transform = `translateX(${offset}px)`;
+
+                // Apply classes for styling the center and visible neighboring items
+                items.forEach((item, index) => {
+                    item.classList.remove('center', 'left-visible', 'right-visible');
+                    if (index === currentIndex) {
+                        item.classList.add('center');
+                    } else if (index === currentIndex - 1) { // Item immediately to the left of the center
+                        item.classList.add('left-visible');
+                    } else if (index === currentIndex + 1) { // Item immediately to the right of the center
+                        item.classList.add('right-visible');
+                    }
+                });
+            }
+
+            /**
+             * Scrolls the carousel to the next div (for auto-scrolling).
+             * Implements the infinite loop logic by resetting position when needed.
+             */
+            function scrollToNextDiv() {
+                currentIndex++; // Move to the next item
+
+                // Check if we have scrolled past the original set of divs and are now on their clones
+                // If currentIndex points to the first clone of original Div 1 (after Div 8)
+                if (currentIndex >= numDivs + numClones) {
+                    // Disable transition for an instant jump
+                    sheetView.style.transition = 'none';
+                    // Reset currentIndex back to the position of the actual first original Div (Div 1)
+                    currentIndex = numClones;
+                    // Apply the instant jump
+                    updateSheetView();
+                    // Force a reflow to ensure the non-transitioned change is applied immediately
+                    void sheetView.offsetWidth;
+                    // Re-enable transition for subsequent smooth scrolls
+                    sheetView.style.transition = 'transform 0.5s ease-in-out';
+                }
+                // Apply the scroll (either the animated one or the instant jump if condition was met)
+                updateSheetView();
+            }
+
+            /**
+             * Resumes auto-scrolling if the tooltip is visible.
+             */
+            function resumeAutoScroll() {
+                if (tooltipDiv.classList.contains('show') && !scrollInterval) {
+                    scrollInterval = setInterval(scrollToNextDiv, 3500);
+                }
+            }
+
+            // --- Manual Dragging/Swiping Logic ---
+
+            /**
+             * Gets the X coordinate from a mouse or touch event.
+             * @param {Event} event - The mouse or touch event.
+             * @returns {number} The X coordinate.
+             */
+            function getPositionX(event) {
+                return event.type.includes('mouse') ? event.pageX : event.touches[0].clientX;
+            }
+
+            /**
+             * Starts the dragging/swiping process.
+             * @param {Event} event - The mouse or touch event.
+             */
+            function startDrag(event) {
+                // Prevent default to avoid image dragging or scrolling issues
+                event.preventDefault();
+                isDragging = true;
+                sheetView.classList.add('grabbing'); // Change cursor
+                startX = getPositionX(event);
+
+                // Get the current transform value (e.g., "matrix(1, 0, 0, 1, -1234, 0)")
+                const transformMatrix = window.getComputedStyle(sheetView).getPropertyValue('transform');
+                // Extract the translateX value from the matrix
+                prevTranslate = parseFloat(transformMatrix.split(',')[4]) || 0;
+                currentTranslate = prevTranslate;
+
+                // Stop auto-scrolling when manual interaction begins
+                clearInterval(scrollInterval);
+                scrollInterval = null;
+
+                // Disable CSS transition for smooth real-time dragging
+                sheetView.style.transition = 'none';
+
+                // Start animation loop for smoother dragging
+                cancelAnimationFrame(animationId);
+                animationId = requestAnimationFrame(animation);
+            }
+
+            /**
+             * Handles the dragging/swiping movement.
+             * @param {Event} event - The mouse or touch event.
+             */
+            function drag(event) {
+                if (!isDragging) return;
+
+                const currentPositionX = getPositionX(event);
+                const diffX = currentPositionX - startX;
+                currentTranslate = prevTranslate + diffX;
+
+                // Apply the transform directly during drag
+                sheetView.style.transform = `translateX(${currentTranslate}px)`;
+            }
+
+            /**
+             * Ends the dragging/swiping process and snaps to the nearest item.
+             * @param {Event} event - The mouse or touch event.
+             */
+            function endDrag() {
+                if (!isDragging) return;
+                isDragging = false;
+                sheetView.classList.remove('grabbing'); // Reset cursor
+
+                cancelAnimationFrame(animationId); // Stop animation loop
+
+                // Re-enable CSS transition for snapping effect
+                sheetView.style.transition = 'transform 0.5s ease-in-out';
+
+                const items = Array.from(sheetView.children);
+                if (items.length === 0) return;
+
+                const itemStyle = getComputedStyle(items[0]);
+                const itemWidth = items[0].offsetWidth + parseFloat(itemStyle.marginLeft) + parseFloat(itemStyle.marginRight);
+
+                // Calculate the new index based on the final dragged position
+                // The offset is relative to the center of the sheetView
+                const sheetViewCenterOffset = (sheetView.offsetWidth / 2) - (itemWidth / 2);
+                let newIndex = Math.round((-currentTranslate + sheetViewCenterOffset) / itemWidth);
+
+                // --- Infinite Loop Logic for Manual Dragging ---
+                // If we've dragged into the cloned items at the beginning
+                if (newIndex < numClones) {
+                    // Temporarily disable transition for instant jump
+                    sheetView.style.transition = 'none';
+                    // Calculate the equivalent index in the original set
+                    currentIndex = numDivs + newIndex;
+                    updateSheetView(); // Apply instant jump
+                    void sheetView.offsetWidth; // Force reflow
+                    sheetView.style.transition = 'transform 0.5s ease-in-out'; // Re-enable transition
+                }
+                // If we've dragged into the cloned items at the end
+                else if (newIndex >= numDivs + numClones) {
+                    // Temporarily disable transition for instant jump
+                    sheetView.style.transition = 'none';
+                    // Calculate the equivalent index in the original set
+                    currentIndex = newIndex - numDivs;
+                    updateSheetView(); // Apply instant jump
+                    void sheetView.offsetWidth; // Force reflow
+                    sheetView.style.transition = 'transform 0.5s ease-in-out'; // Re-enable transition
+                } else {
+                    // If still within the original bounds (or initial clones), just update currentIndex
+                    currentIndex = newIndex;
+                }
+
+                updateSheetView(); // Snap to the final position with transition
+
+                // Resume auto-scrolling after a short delay
+                setTimeout(resumeAutoScroll, 1000); // Give user a moment before auto-scroll resumes
+            }
+
+            /**
+             * Animation loop for smoother dragging.
+             */
+            function animation() {
+                if (isDragging) {
+                    requestAnimationFrame(animation);
+                }
+            }
+
+            // Add event listeners for mouse and touch
+            sheetView.addEventListener('mousedown', startDrag);
+            sheetView.addEventListener('mouseup', endDrag);
+            sheetView.addEventListener('mouseleave', endDrag); // End drag if mouse leaves the element
+            sheetView.addEventListener('mousemove', drag);
+
+            sheetView.addEventListener('touchstart', startDrag);
+            sheetView.addEventListener('touchend', endDrag);
+            sheetView.addEventListener('touchcancel', endDrag); // Handle touch being interrupted
+            sheetView.addEventListener('touchmove', drag);
+
+            // --- Initial Setup and Auto-Scrolling with localStorage ---
+
+            // Initialize the carousel items
+            createSheetItems();
+            // Update view to correctly position the initial centered item
+            updateSheetView();
+
+            // Check if the user has seen the tooltip before
+            const hasSeenTooltip = localStorage.getItem('hasSeenTooltip');
+
+            if (!hasSeenTooltip) {
+                // First-time visitor: Show tooltip after delay and set flag in localStorage
+                setTimeout(() => {
+                    tooltipDiv.classList.add('show');
+                    localStorage.setItem('hasSeenTooltip', 'true'); // Set the flag
+                    // Update the view again in case the tooltip appearing affects layout
+                    updateSheetView();
+                }, 5000);
+
+                // Start auto-scrolling after a delay (only for first-time visitors)
+                setTimeout(() => {
+                    resumeAutoScroll();
+                }, 6000);
+            }
+            // If hasSeenTooltip is true, the tooltip-div remains hidden by default CSS
+            // and auto-scrolling does not start automatically.
+
+            // Event listener for the "Learn More" button to toggle tooltip visibility
+            if (learnMoreBtn && tooltipDiv) {
+                learnMoreBtn.addEventListener('click', function (event) {
+                    event.preventDefault();
+                    // Toggle the 'show' class which will now also toggle 'display'
+                    tooltipDiv.classList.toggle('show');
+
+                    if (!tooltipDiv.classList.contains('show')) {
+                        // If tooltip is hidden, stop auto-scrolling
+                        clearInterval(scrollInterval);
+                        scrollInterval = null;
+                    } else {
+                        // If tooltip is shown, restart auto-scrolling if not already running
+                        resumeAutoScroll();
+                        // Update view in case visibility change affects layout
+                        updateSheetView();
+                    }
+                });
+            }
+
+            // Update view on window resize to maintain responsiveness
+            window.addEventListener('resize', updateSheetView);
+        });
+    </script>
+</body>
+
+</html>
