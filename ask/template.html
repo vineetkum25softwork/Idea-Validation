@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Idea Validation Summary</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            margin: 0;
+            padding: 30px;
+            background-color: #f4f7f6;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            background: #fff;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 30px;
+            font-weight: 700;
+            font-size: 2.2rem;
+        }
+        h2 {
+            color: #34495e;
+            border-bottom: 2px solid #e0e0e0;
+            padding-bottom: 10px;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            font-weight: 600;
+            font-size: 1.5rem;
+        }
+        h3 {
+            color: #4a4a4a;
+            margin-top: 25px;
+            margin-bottom: 10px;
+            font-weight: 500;
+            font-size: 1.1rem;
+        }
+        p {
+            margin-bottom: 15px;
+            font-size: 1rem;
+            color: #555;
+        }
+        p strong {
+            color: #333;
+        }
+        .section-content {
+            padding-left: 20px;
+            border-left: 3px solid #8BC34A;
+            margin-bottom: 30px;
+        }
+        .note {
+            font-style: italic;
+            color: #7f8c8d;
+            font-size: 0.9rem;
+            margin-top: 20px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Product Idea Validation Summary</h1>
+
+        <h2>Section 1: The Core Idea</h2>
+        <div class="section-content">
+            <h3>1. Idea Name:</h3>
+            <p>{{ideaName}}</p>
+
+            <h3>2. Problem:</h3>
+            <p>{{problem}}</p>
+
+            <h3>3. Idea Description:</h3>
+            <p>{{ideaDescription}}</p>
+        </div>
+
+        <h2>Section 2: The Target Customer</h2>
+        <div class="section-content">
+            <h3>4. Target Customer: Age Group</h3>
+            <p>{{ageGroup}}</p>
+
+            <h3>5. Target Customer: Work/Profession</h3>
+            <p>{{workProfession}}</p>
+
+            <h3>6. Target Customer: Income Status</h3>
+            <p>{{incomeStatus}}</p>
+
+            <h3>7. Target Customer: Interests</h3>
+            <p>{{interests}}</p>
+
+            <h3>8. Target Customer: Behavior</h3>
+            <p>{{behavior}}</p>
+
+            <h3>9. Target Customer: Region (Customers available)</h3>
+            <p>{{customersAvailableRegion}}</p>
+
+            <h3>9. Target Customer: Region (Target Region)</h3>
+            <p>{{targetRegion}}</p>
+        </div>
+
+        <h2>Section 3: Market & Competition</h2>
+        <div class="section-content">
+            <h3>10. Unique Selling Proposition (USP):</h3>
+            <p>{{usp}}</p>
+
+            <h3>11. Direct Competitors:</h3>
+            <p>{{directCompetitors}}</p>
+
+            <h3>12. Indirect Competitors:</h3>
+            <p>{{indirectCompetitors}}</p>
+
+            <h3>13. Competitive Analysis:</h3>
+            <p>{{competitiveAnalysis}}</p>
+        </div>
+
+        <h2>Section 4: Business Model & Validation</h2>
+        <div class="section-content">
+            <h3>14. Revenue Model:</h3>
+            <p>{{revenueModel}}</p>
+
+            <h3>15. Idea Testing: Reaching Customers</h3>
+            <p>{{reachingCustomers}}</p>
+
+            <h3>16. Idea Testing: Encouraging Feedback</h3>
+            <p>{{encouragingFeedback}}</p>
+
+            <h3>17. Desired Feedback & Metrics:</h3>
+            <p>{{desiredFeedbackMetrics}}</p>
+        </div>
+
+        <h2>Section 5: Promotion & Launch</h2>
+        <div class="section-content">
+            <h3>18. Promotion: Overall Strategy</h3>
+            <p>{{overallStrategy}}</p>
+
+            <h3>19. Promotion: Channels</h3>
+            <p>{{promotionChannels}}</p>
+
+            <h3>20. Promotion: Channel Justification</h3>
+            <p>{{channelJustification}}</p>
+        </div>
+
+        <h2>Section 6: Reflection & Next Steps</h2>
+        <div class="section-content">
+            <h3>21. Challenges:</h3>
+            <p>{{challenges}}</p>
+        </div>
+
+        <p class="note">This summary was generated from your Product Idea Validation Sheet.</p>
+    </div>
+</body>
+</html>
