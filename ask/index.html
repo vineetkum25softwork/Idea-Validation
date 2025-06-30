@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Idea Validation Sheet - The Explorer</title>
+    <!-- Google Fonts - Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Bootstrap CSS from CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" xintegrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <!-- Custom CSS -->
+    <style>
+        :root {
+            --primary-color: #2c3e50; /* Darker blue/gray for headings and accents */
+            --secondary-color: #34495e; /* Slightly lighter than primary */
+            --text-color: #4a4a4a; /* Dark gray for general text */
+            --light-text-color: #7f8c8d; /* Lighter gray for lead paragraphs */
+            --background-color: #ecf0f1; /* Very light gray background */
+            --card-background: #ffffff; /* White for main container */
+            --border-color: #bdc3c7; /* Light gray for borders */
+            --focus-border-color: #8BC34A; /* Light green for input focus border */
+            --focus-shadow-color: rgba(139, 195, 74, 0.25); /* Light green shadow for focus state */
+            
+            /* Updated colors for minimalist example card */
+            --example-card-bg: #f8f8f8; /* Even lighter off-white for example card background */
+            --example-card-border: #e9e9e9; /* Very subtle light gray border */
+            --example-card-text: #666666; /* Slightly lighter gray for example text */
+
+            --alert-success-bg: #d4edda; /* Light green for success alert background */
+            --alert-success-border: #28a745; /* Green for success alert border */
+            --alert-success-text: #155724; /* Dark green for success alert text */
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--background-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 40px 20px; /* Increased padding for overall page */
+            line-height: 1.6;
+            color: var(--text-color);
+        }
+        .form-container { /* Custom class for the main container */
+            background-color: var(--card-background);
+            padding: 50px; /* Increased padding inside container */
+            border-radius: 18px; /* Slightly more rounded corners */
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1); /* Enhanced shadow */
+            max-width: 950px; /* Slightly wider container */
+            width: 100%;
+            text-align: left;
+        }
+        .app-title { /* Custom class for h1 */
+            font-size: 2.8rem; /* Larger main title */
+            color: var(--primary-color);
+            margin-bottom: 35px; /* Increased margin */
+            font-weight: 700; /* Bolder */
+            text-align: center;
+            letter-spacing: -0.02em;
+        }
+        .section-title { /* Custom class for h2 */
+            font-size: 2rem; /* Larger section titles */
+            color: var(--secondary-color);
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 15px; /* Increased padding */
+            margin-top: 50px; /* Increased top margin */
+            margin-bottom: 35px; /* Increased bottom margin */
+            font-weight: 600;
+        }
+        .lead-paragraph { /* Custom class for lead paragraph */
+            font-size: 1.25rem; /* Larger lead paragraph */
+            color: var(--light-text-color);
+            margin-bottom: 40px; /* Increased margin */
+            text-align: center;
+            font-weight: 300; /* Lighter weight for lead */
+        }
+        .form-label {
+            font-weight: 500; /* Medium weight */
+            color: var(--secondary-color);
+            margin-bottom: 10px; /* Space between label and input */
+            font-size: 1.05rem; /* Slightly larger label font */
+            display: block; /* Ensure label takes full width */
+        }
+        .example-link-wrapper { /* Wrapper for the example link */
+            text-align: right; /* Align example link to the right */
+            margin-top: 10px; /* Space between input and example link */
+            margin-bottom: 5px; /* Space between example link and example card */
+        }
+        .example-link {
+            font-size: 0.9rem;
+            color: #007bff; /* Bootstrap primary blue */
+            text-decoration: none;
+            cursor: pointer;
+            font-weight: 400;
+            transition: color 0.2s ease;
+        }
+        .example-link:hover {
+            color: #0056b3;
+            text-decoration: underline;
+        }
+        .form-control {
+            border-radius: 10px; /* More rounded input fields */
+            padding: 12px 18px; /* Increased padding inside inputs */
+            border: 1px solid var(--border-color);
+            font-size: 1rem; /* Standard font size for input text */
+            color: var(--text-color);
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+        .form-control::placeholder {
+            color: var(--light-text-color); /* Lighter placeholder text */
+            opacity: 0.7; /* Make placeholder slightly more transparent */
+        }
+        .form-control:focus {
+            border-color: var(--focus-border-color); /* Light green border on focus */
+            box-shadow: 0 0 0 0.25rem var(--focus-shadow-color); /* Light green shadow on focus */
+            outline: none; /* Remove default outline */
+        }
+        .mb-3 {
+            margin-bottom: 30px !important; /* Increased margin between form groups */
+        }
+        .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+            border-radius: 10px; /* More rounded button */
+            padding: 15px 30px; /* Increased button padding */
+            font-size: 1.2rem; /* Larger button text */
+            font-weight: 600; /* Bolder button text */
+            transition: background-color 0.3s ease, border-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        .btn-primary:hover {
+            background-color: var(--secondary-color);
+            border-color: var(--secondary-color);
+            transform: translateY(-2px); /* Slight lift effect on hover */
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        }
+        .btn-primary:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Custom Styles for the Example Content Card */
+        .example-content-card { /* Custom class for the example content div */
+            background-color: var(--example-card-bg); /* New background color */
+            border: 1px solid var(--example-card-border); /* New border color */
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 5px; /* Space between example link and example card */
+            margin-bottom: 15px; /* Space after example card before next field */
+            color: var(--example-card-text); /* New text color */
+            position: relative;
+            display: none; /* Hidden by default */
+            opacity: 0; /* For fade effect */
+            transition: opacity 0.3s ease-in-out;
+            box-shadow: 0 1px 5px rgba(0, 0, 0, 0.05); /* Even more subtle shadow for minimalist card effect */
+        }
+        .example-content-card.show {
+            display: block;
+            opacity: 1;
+        }
+        .example-content-card .close-btn { /* Custom close button for the example card */
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            cursor: pointer;
+            color: inherit;
+            opacity: 0.7;
+            transition: opacity 0.2s ease;
+            line-height: 1; /* Adjust line height for better centering of 'x' */
+            padding: 0; /* Remove default button padding */
+        }
+        .example-content-card .close-btn:hover {
+            opacity: 1;
+        }
+        .example-content-card p {
+            margin-bottom: 0;
+            color: inherit;
+            font-size: 0.95rem;
+        }
+
+        /* Custom Alert Styles (retained) */
+        .custom-alert {
+            display: none; /* Hidden by default */
+            position: relative;
+            padding: 15px 20px;
+            margin-bottom: 25px; /* Space below alert */
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 500;
+            opacity: 0; /* Start hidden for fade-in effect */
+            transition: opacity 0.3s ease-in-out;
+        }
+        .custom-alert.show {
+            display: block;
+            opacity: 1;
+        }
+        .custom-alert-success {
+            background-color: var(--alert-success-bg);
+            border: 1px solid var(--alert-success-border);
+            color: var(--alert-success-text);
+        }
+        .custom-alert .btn-close-alert {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            cursor: pointer;
+            color: inherit;
+            opacity: 0.7;
+            transition: opacity 0.2s ease;
+        }
+        .custom-alert .btn-close-alert:hover {
+            opacity: 1;
+        }
+
+        /* --- Mobile Responsiveness Adjustments --- */
+        @media (max-width: 768px) {
+            body {
+                padding: 15px 5px; /* Reduced overall padding for smaller screens */
+            }
+            .form-container {
+                padding: 25px 15px; /* Reduced inner padding for form container */
+                border-radius: 10px; /* Slightly less rounded on mobile */
+            }
+            .app-title {
+                font-size: 2rem; /* Smaller main title on mobile */
+                margin-bottom: 20px;
+            }
+            .section-title {
+                font-size: 1.5rem; /* Smaller section titles on mobile */
+                padding-bottom: 8px;
+                margin-top: 35px;
+                margin-bottom: 20px;
+            }
+            .lead-paragraph {
+                font-size: 1rem;
+                margin-bottom: 25px;
+            }
+            .form-label {
+                font-size: 0.95rem;
+            }
+            .form-control {
+                padding: 10px 15px;
+                border-radius: 8px;
+            }
+            .mb-3 {
+                margin-bottom: 18px !important; /* Reduced margin between form groups */
+            }
+            .btn-primary {
+                padding: 10px 18px;
+                font-size: 1rem;
+                border-radius: 8px;
+            }
+            .example-link-wrapper {
+                margin-top: 8px;
+                margin-bottom: 3px;
+            }
+            .example-content-card {
+                padding: 10px;
+                margin-top: 5px;
+                margin-bottom: 8px;
+            }
+            .example-content-card .close-btn {
+                font-size: 1rem;
+                top: 8px;
+                right: 8px;
+            }
+            .example-content-card p {
+                font-size: 0.85rem;
+            }
+            .custom-alert {
+                padding: 10px 12px;
+                margin-bottom: 15px;
+            }
+            .custom-alert .btn-close-alert {
+                font-size: 1rem;
+                top: 8px;
+                right: 10px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            body {
+                padding: 10px 5px; /* Minimal padding on very small screens */
+            }
+            .form-container {
+                padding: 15px 10px; /* Even more minimal inner padding */
+            }
+            .app-title {
+                font-size: 1.6rem; /* Further reduced title size */
+                margin-bottom: 15px;
+            }
+            .section-title {
+                font-size: 1.2rem; /* Further reduced section title size */
+                margin-top: 25px;
+                margin-bottom: 15px;
+            }
+            .lead-paragraph {
+                font-size: 0.9rem;
+                margin-bottom: 20px;
+            }
+            .form-label {
+                font-size: 0.9rem;
+            }
+            .form-control {
+                padding: 6px 10px;
+            }
+            .mb-3 {
+                margin-bottom: 12px !important; /* Even tighter spacing */
+            }
+            .btn-primary {
+                padding: 8px 12px;
+                font-size: 0.85rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container rounded-lg shadow-lg">
+        <h1 class="app-title mb-4">Product Idea Validation Sheet - The Explorer</h1>
+        <p class="lead-paragraph mb-4">Welcome to Your Product Idea Validation Journey! Please fill out the details below.</p>
+
+        <form id="ideaValidationForm">
+            <!-- Custom Alert Div -->
+            <div id="customAlert" class="custom-alert custom-alert-success" role="alert">
+                <span id="alertMessage"></span>
+                <button type="button" class="btn-close-alert" aria-label="Close">&times;</button>
+            </div>
+
+            <!-- Section 1: The Core Idea -->
+            <h2 class="section-title">Section 1: The Core Idea</h2>
+            <div class="mb-3">
+                <label for="ideaName" class="form-label">1. Idea Name</label>
+                <p class="question-prompt">What's the name you're thinking of for your product or service? This is often the first thing people will know about your idea.</p>
+                <input type="text" class="form-control" id="ideaName" name="ideaName" required>
+                <div class="example-link-wrapper">
+                    <a class="example-link" href="#" data-target="exampleCard1">
+                        Example
+                    </a>
+                </div>
+                <div class="example-content-card" id="exampleCard1">
+                    <button type="button" class="close-btn" data-target="exampleCard1">&times;</button>
+                    <p><strong>Example:</strong> "Local Bakery App" or "Easy Home Cleaning Service"</p>
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="problem" class="form-label">2. Problem</label>
+                <p class="question-prompt">What specific problem or challenge does your product or service aim to solve for people? Think about what makes people frustrated, inconvenienced, or what they wish was easier.</p>
+                <textarea class="form-control" id="problem" name="problem" rows="4" required></textarea>
+                <div class="example-link-wrapper">
+                    <a class="example-link" href="#" data-target="exampleCard2">
+                        Example
+                    </a>
+                </div>
+                <div class="example-content-card" id="exampleCard2">
+                    <button type="button" class="close-btn" data-target="exampleCard2">&times;</button>
+                    <p><strong>Example:</strong> "Many people in my neighborhood want fresh baked goods but don't have time to visit the bakery during open hours."</p>
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="ideaDescription" class="form-label">3. Idea Description</label>
+                <p class="question-prompt">Clearly describe what your product or service is. What does it do, how does it work, and what are its main features?</p>
+                <textarea class="form-control" id="ideaDescription" name="ideaDescription" rows="6" required></textarea>
+                <div class="example-link-wrapper">
+                    <a class="example-link" href="#" data-target="exampleCard3">
+                        Example
+                    </a>
+                </div>
+                <div class="example-content-card" id="exampleCard3">
+                    <button type="button" class="close-btn" data-target="exampleCard3">&times;</button>
+                    <p><strong>Example:</strong> "My idea is a mobile app that lets users order fresh bread, cakes, and pastries from local bakeries and have them delivered directly to their homes. Users can browse menus, place orders, and track deliveries."</p>
+                </div>
+            </div>
+
+            <!-- Section 2: The Target Customer -->
+            <h2 class="section-title">Section 2: The Target Customer</h2>
+            <div class="mb-3">
+                <label for="ageGroup" class="form-label">4. Target Customer: Age Group</label>
+                <p class="question-prompt">What is the typical age range of the people most likely to use your product or service?</p>
+                <input type="text" class="form-control" id="ageGroup" name="ageGroup">
+                <div class="example-link-wrapper">
+                    <a class="example-link" href="#" data-target="exampleCard4">
+                        Example
+                    </a>
+                </div>
+                <div class="example-content-card" id="exampleCard4">
+                    <button type="button" class="close-btn" data-target="exampleCard4">&times;</button>
+                    <p><strong>Example:</strong> "25-55 years old" or "Mostly teenagers"</p>
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="workProfession" class="form-label">5. Target Customer: Work/Profession</label>
+                <p class="question-prompt">What kind of jobs or roles do your ideal customers usually have? This helps understand their lifestyle and daily routines.</p>
+                <input type="text" class="form-control" id="workProfession" name="workProfession">
+                <div class="example-link-wrapper">
+                    <a class="example-link" href="#" data-target="exampleCard5">
+                        Example
+                    </a>
+                </div>
+                <div class="example-content-card" id="exampleCard5">
+                    <button type="button" class="close-btn" data-target="exampleCard5">&times;</button>
+                    <p><strong>Example:</strong> "Working professionals, stay-at-home parents" or "Small business owners, office workers"</p>
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="incomeStatus" class="form-label">6. Target Customer: Income Status</label>
+                <p class="question-prompt">What is the general income level of your target customers? This helps determine pricing and affordability.</p>
+                <input type="text" class="form-control" id="incomeStatus" name="incomeStatus">
+                <div class="example-link-wrapper">
+                    <a class="example-link" href="#" data-target="exampleCard6">
+                        Example
+                    </a>
+                </div>
+                <div class="example-content-card" id="exampleCard6">
+                    <button type="button" class="close-btn" data-target="exampleCard6">&times;</button>
+                    <p><strong>Example:</strong> "Middle-income families" or "Students with a limited budget"</p>
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="interests" class="form-label">7. Target Customer: Interests</label>
+                <p class="question-prompt">What hobbies or interests do your target customers have that might relate to your product or the problem it solves?</p>
+                <input type="text" class="form-control" id="interests" name="interests">
+                <div class="example-link-wrapper">
+                    <a class="example-link" href="#" data-target="exampleCard7">
+                        Example
+                    </a>
+                </div>
+                <div class="example-content-card" id="exampleCard7">
+                    <button type="button" class="close-btn" data-target="exampleCard7">&times;</button>
+                    <p><strong>Example:</strong> "Cooking, healthy eating, supporting local businesses, convenience"</p>
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="behavior" class="form-label">8. Target Customer: Behavior</label>
+                <p class="question-prompt">What are the habits, routines, or ways of thinking your target customers have that are relevant to your product?</p>
+                <textarea class="form-control" id="behavior" name="behavior" rows="4"></textarea>
+                <div class="example-link-wrapper">
+                    <a class="example-link" href="#" data-target="exampleCard8">
+                        Example
+                    </a>
+                </div>
+                <div class="example-content-card" id="exampleCard8">
+                    <button type="button" class="close-btn" data-target="exampleCard8">&times;</button>
+                    <p><strong>Example:</strong> "They often use delivery apps for food, prefer online ordering for convenience, or are too busy to run errands."</p>
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="customersAvailableRegion" class="form-label">9. Target Customer: Region (Customers available)</label>
+                <p class="question-prompt">In which region are your customers available?</p>
+                <textarea class="form-control" id="customersAvailableRegion" name="customersAvailableRegion" rows="3"></textarea>
+                <div class="example-link-wrapper">
+                    <a class="example-link" href="#" data-target="exampleCard9a">
+                        Example
+                    </a>
+                </div>
+                <div class="example-content-card" id="exampleCard9a">
+                    <button type="button" class="close-btn" data-target="exampleCard9a">&times;</button>
+                    <p><strong>Example:</strong> "Customers are available across North India, especially in bigger cities." or "Globally, for online digital products, but mostly in English-speaking countries."</p>
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="targetRegion" class="form-label">9. Target Customer: Region (Target Region)</label>
+                <p class="question-prompt">In which region will you target your customers?</p>
+                <textarea class="form-control" id="targetRegion" name="targetRegion" rows="3"></textarea>
+                <div class="example-link-wrapper">
+                    <a class="example-link" href="#" data-target="exampleCard9b">
+                        Example
+                    </a>
+                </div>
+                <div class="example-content-card" id="exampleCard9b">
+                    <button type="button" class="close-btn" data-target="exampleCard9b">&times;</button>
+                    <p><strong>Example:</strong> "Initially, I will target customers within the Patna district because of easier logistics and a strong local market." or "For the first six months, I will focus on the Delhi NCR region due to its large young population and high internet penetration."</p>
+                </div>
+            </div>
+
+            <!-- Section 3: Market & Competition -->
+            <h2 class="section-title">Section 3: Market & Competition</h2>
+            <div class="mb-3">
+                <label for="usp" class="form-label">10. Unique Selling Proposition (USP)</label>
+                <p class="question-prompt">What makes your product or service special or better than other options out there? Why should someone choose you?</p>
+                <textarea class="form-control" id="usp" name="usp" rows="4"></textarea>
+                <div class="example-link-wrapper">
+                    <a class="example-link" href="#" data-target="exampleCard10">
+                        Example
+                    </a>
+                </div>
+                <div class="example-content-card" id="exampleCard10">
+                    <button type="button" class="close-btn" data-target="exampleCard10">&times;</button>
+                    <p><strong>Example:</strong> "Our app delivers fresh bakery items within 30 minutes, directly supporting small, local bakeries by handling their deliveries for them."</p>
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="directCompetitors" class="form-label">11. Direct Competitors</label>
+                <p class="question-prompt">Who are the other businesses that offer something very similar to what you're proposing?</p>
+                <textarea class="form-control" id="directCompetitors" name="directCompetitors" rows="4"></textarea>
+                <div class="example-link-wrapper">
+                    <a class="example-link" href="#" data-target="exampleCard11">
+                        Example
+                    </a>
+                </div>
+                <div class="example-content-card" id="exampleCard11">
+                    <button type="button" class="close-btn" data-target="exampleCard11">&times;</button>
+                    <p><strong>Example:</strong> "Other food delivery apps (e.g., Swiggy, Zomato), larger chain bakeries with their own delivery."</p>
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="indirectCompetitors" class="form-label">12. Indirect Competitors</label>
+                <p class="question-prompt">Who are the businesses or existing habits that solve the same problem in a different way, or are alternatives people might use instead of your solution?</p>
+                <textarea class="form-control" id="indirectCompetitors" name="indirectCompetitors" rows="4"></textarea>
+                <div class="example-link-wrapper">
+                    <a class="example-link" href="#" data-target="exampleCard12">
+                        Example
+                    </a>
+                </div>
+                <div class="example-content-card" id="exampleCard12">
+                    <button type="button" class="close-btn" data-target="exampleCard12">&times;</button>
+                    <p><strong>Example:</strong> "People visiting the bakery in person, baking at home, buying packaged bread from grocery stores, skipping baked goods entirely."</p>
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="competitiveAnalysis" class="form-label">13. Competitive Analysis</label>
+                <p class="question-prompt">What are the strengths and weaknesses of your competitors?</p>
+                <textarea class="form-control" id="competitiveAnalysis" name="competitiveAnalysis" rows="6"></textarea>
+                <div class="example-link-wrapper">
+                    <a class="example-link" href="#" data-target="exampleCard13">
+                        Example
+                    </a>
+                </div>
+                <div class="example-content-card" id="exampleCard13">
+                    <button type="button" class="close-btn" data-target="exampleCard13">&times;</button>
+                    <p><strong>Example:</strong> "Direct competitors like Swiggy and Zomato have wide restaurant selection (strength) but charge high commissions to small bakeries and lack local focus (weaknesses). Indirect competitors like supermarkets offer cheap bread (strength) but lack freshness and variety (weakness). Our 'Local Bakery App' will differentiate by supporting local bakeries with better rates and offering specialized, quick delivery of fresh, diverse baked goods directly to customers."</p>
+                </div>
+            </div>
+
+            <!-- Section 4: Business Model & Validation -->
+            <h2 class="section-title">Section 4: Business Model & Validation</h2>
+            <div class="mb-3">
+                <label for="revenueModel" class="form-label">14. Revenue Model</label>
+                <p class="question-prompt">How will your product or service make money? What will customers pay for, and how will that happen?</p>
+                <textarea class="form-control" id="revenueModel" name="revenueModel" rows="4"></textarea>
+                <div class="example-link-wrapper">
+                    <a class="example-link" href="#" data-target="exampleCard14">
+                        Example
+                    </a>
+                </div>
+                <div class="example-content-card" id="exampleCard14">
+                    <button type="button" class="close-btn" data-target="exampleCard14">&times;</button>
+                    <p><strong>Example:</strong> "We will take a small commission from each bakery order, and customers will pay a small delivery fee per order."</p>
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="reachingCustomers" class="form-label">15. Idea Testing: Reaching Customers</label>
+                <p class="question-prompt">How will you find and talk to some of your potential customers to get their initial thoughts on your idea?</p>
+                <textarea class="form-control" id="reachingCustomers" name="reachingCustomers" rows="4"></textarea>
+                <div class="example-link-wrapper">
+                    <a class="example-link" href="#" data-target="exampleCard15">
+                        Example
+                    </a>
+                </div>
+                <div class="example-content-card" id="exampleCard15">
+                    <button type="button" class="close-btn" data-target="exampleCard15">&times;</button>
+                    <p><strong>Example:</strong> "I will talk to friends and family who fit the target customer profile, create a simple online survey to share on local community groups, or interview people near bakeries."</p>
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="encouragingFeedback" class="form-label">16. Idea Testing: Encouraging Feedback</label>
+                <p class="question-prompt">Once you reach out, how will you encourage people to try your product (even a rough version or concept) and give you honest feedback?</p>
+                <textarea class="form-control" id="encouragingFeedback" name="encouragingFeedback" rows="4"></textarea>
+                <div class="example-link-wrapper">
+                    <a class="example-link" href="#" data-target="exampleCard16">
+                        Example
+                    </a>
+                </div>
+                <div class="example-content-card" id="exampleCard16">
+                    <button type="button" class="close-btn" data-target="exampleCard16">&times;</button>
+                    <p><strong>Example:</strong> "Offer a discount on their first order if they provide feedback, give a small thank-you gift for completing the survey, or explain how their input will help shape the service."</p>
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="desiredFeedbackMetrics" class="form-label">17. Desired Feedback & Metrics</label>
+                <p class="question-prompt">What specific questions do you want answers to during your testing phase? How will you know if your idea test was successful?</p>
+                <textarea class="form-control" id="desiredFeedbackMetrics" name="desiredFeedbackMetrics" rows="4"></textarea>
+                <div class="example-link-wrapper">
+                    <a class="example-link" href="#" data-target="exampleCard17">
+                        Example
+                    </a>
+                </div>
+                <div class="example-content-card" id="exampleCard17">
+                    <button type="button" class="close-btn" data-target="exampleCard17">&times;</button>
+                    <p><strong>Example:</strong> "I want to know if people would pay for this convenience and how often. Success means at least 50% of surveyed people say they would use the app regularly."</p>
+                </div>
+            </div>
+
+            <!-- Section 5: Promotion & Launch -->
+            <h2 class="section-title">Section 5: Promotion & Launch</h2>
+            <div class="mb-3">
+                <label for="overallStrategy" class="form-label">18. Promotion: Overall Strategy</label>
+                <p class="question-prompt">How will you let your target customers know about your finished product or service when it's ready?</p>
+                <textarea class="form-control" id="overallStrategy" name="overallStrategy" rows="4"></textarea>
+                <div class="example-link-wrapper">
+                    <a class="example-link" href="#" data-target="exampleCard18">
+                        Example
+                    </a>
+                </div>
+                <div class="example-content-card" id="exampleCard18">
+                    <button type="button" class="close-btn" data-target="exampleCard18">&times;</button>
+                    <p><strong>Example:</strong> "Focus on social media marketing, local community outreach, and partnerships with bakeries."</p>
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="promotionChannels" class="form-label">19. Promotion: Channels</label>
+                <p class="question-prompt">What specific places or methods will you use to reach your target audience?</p>
+                <textarea class="form-control" id="promotionChannels" name="promotionChannels" rows="4"></textarea>
+                <div class="example-link-wrapper">
+                    <a class="example-link" href="#" data-target="exampleCard19">
+                        Example
+                    </a>
+                </div>
+                <div class="example-content-card" id="exampleCard19">
+                    <button type="button" class="close-btn" data-target="exampleCard19">&times;</button>
+                    <p><strong>Example:</strong> "Local Facebook groups, Instagram, flyers at local bakeries, community events, Google Search Ads for 'local bakery delivery'."</p>
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="channelJustification" class="form-label">20. Promotion: Channel Justification</label>
+                <p class="question-prompt">Why do you believe the channels you've chosen are the best way to find your target customers?</p>
+                <textarea class="form-control" id="channelJustification" name="channelJustification" rows="4"></textarea>
+                <div class="example-link-wrapper">
+                    <a class="example-link" href="#" data-target="exampleCard20">
+                        Example
+                    </a>
+                </div>
+                <div class="example-content-card" id="exampleCard20">
+                    <button type="button" class="close-btn" data-target="exampleCard20">&times;</button>
+                    <p><strong>Example:</strong> "Many busy professionals and parents are on Facebook and Instagram, making these good places to share about a convenient delivery service. Flyers at bakeries directly target people already interested in baked goods."</p>
+                </div>
+            </div>
+
+            <!-- Section 6: Reflection & Next Steps -->
+            <h2 class="section-title">Section 6: Reflection & Next Steps</h2>
+            <div class="mb-3">
+                <label for="challenges" class="form-label">21. Challenges</label>
+                <p class="question-prompt">What are the biggest questions or challenges you still need to figure out?</p>
+                <textarea class="form-control" id="challenges" name="challenges" rows="8"></textarea>
+                <div class="example-link-wrapper">
+                    <a class="example-link" href="#" data-target="exampleCard21">
+                        Example
+                    </a>
+                </div>
+                <div class="example-content-card" id="exampleCard21">
+                    <button type="button" class="close-btn" data-target="exampleCard21">&times;</button>
+                    <p><strong>Example:</strong> "Ensuring consistent quality across multiple bakeries; scaling delivery logistics efficiently; acquiring initial users without a large marketing budget."</p>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100 mt-4">Submit Idea Validation</button>
+        </form>
+    </div>
+
+    <!-- Bootstrap Bundle with Popper (still needed for some basic Bootstrap classes if you use them elsewhere) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" xintegrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1bK7b25XpMa5J4+zQ" crossorigin="anonymous"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const ideaValidationForm = document.getElementById('ideaValidationForm');
+            const customAlert = document.getElementById('customAlert');
+            const alertMessage = document.getElementById('alertMessage');
+            const closeAlertButton = customAlert.querySelector('.btn-close-alert');
+
+            // Function to show the custom alert
+            function showAlert(message, type = 'success') {
+                alertMessage.textContent = message;
+                customAlert.className = `custom-alert custom-alert-${type}`; // Reset classes and apply new type
+                customAlert.classList.add('show'); // Add 'show' class to trigger fade-in
+                
+                // Auto-hide after 5 seconds
+                setTimeout(() => {
+                    hideAlert();
+                }, 5000);
+            }
+
+            // Function to hide the custom alert
+            function hideAlert() {
+                customAlert.classList.remove('show'); // Remove 'show' class to trigger fade-out
+                // After transition, set display to none to remove it from layout flow
+                setTimeout(() => {
+                    customAlert.style.display = 'none';
+                }, 300); // Match CSS transition duration
+            }
+
+            // Event listener for the form submission
+            if (ideaValidationForm) {
+                ideaValidationForm.addEventListener('submit', (event) => {
+                    event.preventDefault(); // Prevent default form submission
+
+                    const formData = new FormData(ideaValidationForm);
+                    const data = {};
+                    for (let [key, value] of formData.entries()) {
+                        data[key] = value;
+                    }
+
+                    console.log("Form Data Submitted:", data);
+
+                    // Show custom success alert
+                    showAlert('Form submitted successfully! Check the console for data.', 'success');
+                    
+                    // Optionally, clear the form after submission
+                    // ideaValidationForm.reset();
+                });
+            }
+
+            // Event listener for the custom alert's close button
+            if (closeAlertButton) {
+                closeAlertButton.addEventListener('click', () => {
+                    hideAlert();
+                });
+            }
+
+            // --- Custom Example Card Logic ---
+            document.querySelectorAll('.example-link').forEach(link => {
+                link.addEventListener('click', function(event) {
+                    event.preventDefault(); // Prevent default link behavior
+                    const targetId = this.getAttribute('data-target');
+                    const targetCard = document.getElementById(targetId);
+
+                    if (targetCard) {
+                        // Toggle 'show' class for fade effect
+                        if (targetCard.classList.contains('show')) {
+                            targetCard.classList.remove('show');
+                            setTimeout(() => {
+                                targetCard.style.display = 'none';
+                            }, 300); // Match CSS transition duration
+                        } else {
+                            targetCard.style.display = 'block';
+                            setTimeout(() => {
+                                targetCard.classList.add('show');
+                            }, 10); // Small delay to allow display:block to apply before transition
+                        }
+                    }
+                });
+            });
+
+            document.querySelectorAll('.example-content-card .close-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    const targetId = this.getAttribute('data-target');
+                    const targetCard = document.getElementById(targetId);
+                    if (targetCard) {
+                        targetCard.classList.remove('show');
+                        setTimeout(() => {
+                            targetCard.style.display = 'none';
+                        }, 300); // Match CSS transition duration
+                    }
+                });
+            });
+
+            console.log("All scripts loaded and ready!");
+        });
+    </script>
+</body>
+</html>
