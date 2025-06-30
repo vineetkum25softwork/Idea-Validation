@@ -8,6 +8,8 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
         rel="stylesheet">
+    <!-- Bootstrap Icons for arrows -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <style>
         body {
             font-family: 'Poppins', sans-serif;
@@ -26,18 +28,16 @@
             border-radius: 15px;
             box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
             /* Slightly more pronounced but soft shadow */
-
-            /* Increased padding */
         }
 
         .tooltip-div {
             width: 100%;
             margin: 2rem auto 0 auto;
-            background: linear-gradient(180deg, #eddaf6 3%, #f7effa 10%, #fafaff 20%, #f0ecec 80%, #f3f3f8 90%, #f7eefa 100%);
+            background: linear-gradient(180deg, #e4d6eb 3%, #ede3f0 10%, #f0f0f5 20%, #ececee 80%, #eae5f3 90%, #f7eefa 100%);
             /* Gradient background */
             border-radius: 20px;
             /* More rounded corners */
-            padding: 2.5rem;
+            
             /* Increased padding */
             text-align: center;
             position: relative;
@@ -85,25 +85,26 @@
             border: 0;
         }
 
+        /* Custom Carousel Styles - Applied from Affirm & Align solution */
         .sheet-view-container {
-            min-height: 5in;
+            min-height: 500px; /* Consistent height for the container */
             overflow: hidden;
             margin: auto;
             margin-top: 2rem;
-            /* More space above carousel */
             position: relative;
             user-select: none;
             -webkit-user-select: none;
             -moz-user-select: none;
             -ms-user-select: none;
+            width: 100%; /* Ensure it takes full width */
+            max-width: 900px; /* Limit overall width */
         }
 
         .sheet-view {
             display: flex;
             transition: transform 0.5s ease-in-out;
             align-items: center;
-            padding: 30px 0;
-            /* Increased padding */
+            padding: 30px 0; /* Vertical padding */
             cursor: grab;
         }
 
@@ -112,28 +113,29 @@
         }
 
         .sheet-item {
-            min-width: 3.5in;
-            height: 4in;
+            flex-shrink: 0;
+            width: 85%; /* Active item takes 85% of the container width */
+            min-height: 450px; /* Consistent height for all items to prevent jumping */
             background-color: #fdfdff;
-            /* Very light, almost white background */
             border-radius: 18px;
-            /* Softer rounded corners */
-            margin: 0 15px;
-            /* Increased margin between items */
+            margin-right: 20px; /* Creates the gap and the peek effect */
             display: flex;
             flex-direction: column;
-            /* Align content vertically */
             justify-content: center;
             align-items: center;
             font-size: 1.3rem;
             font-weight: 500;
             color: #555;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-            /* Refined shadow */
             transition: all 0.5s ease-in-out;
-            flex-shrink: 0;
-            padding: 1rem;
+            padding: 1.8rem;
             text-align: center;
+            word-wrap: break-word; /* Ensure long words break */
+            overflow-wrap: break-word; /* Ensure long words break */
+        }
+
+        .sheet-item:last-child {
+            margin-right: 0; /* No margin on the last item */
         }
 
         .sheet-item .icon {
@@ -143,25 +145,64 @@
             color: #8c52ff;
             /* Accent color for icons */
         }
+        
+        /* Ensure text within sheet-item wraps and is not cut off */
+        .sheet-item div span {
+            white-space: normal; /* Override any nowrap */
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            display: block; /* Ensure it takes full width for wrapping */
+            font-size: 1.3rem; /* Keep original font size for content */
+            line-height: 1.5;
+        }
+
 
         .sheet-item.center {
-            min-width: 4.2in;
-            /* Slightly larger center item */
-            height: 4.7in;
-            /* Slightly taller center item */
+            transform: scale(1.05); /* Slight enlargement for focus */
             background-color: #ffffff;
             color: #212529;
             font-weight: 600;
-            transform: scale(1.1);
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-            /* More prominent shadow for center item */
         }
 
         .sheet-item.left-visible,
         .sheet-item.right-visible {
-            opacity: 0.7;
-            transform: scale(0.95);
+            opacity: 0.7; /* Keep some opacity for peeking items */
+            transform: scale(0.95); /* Keep some scale for peeking items */
         }
+
+        /* Carousel Navigation Buttons (Moved below carousel) */
+        .carousel-nav-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px; /* Space between buttons */
+            margin-top: 20px; /* Space above buttons */
+        }
+
+        .carousel-control-btn {
+            background-color: rgba(240, 240, 240, 0.8); /* Light grey with transparency */
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            color: #495057; /* Darker grey arrow color */
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .carousel-control-btn:hover {
+            background-color: rgba(220, 220, 220, 0.9);
+            color: #212529; /* Even darker grey on hover */
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+        }
+
+        /* Removed .carousel-control-prev and .carousel-control-next positioning */
+
 
         .width-lg-80 {
             width: 80%;
@@ -257,8 +298,8 @@
             min-height: auto;
             /* Adjust height based on content */
             display: flex;
-            flex-direction: column;
-            align-items: flex-start;
+            flex-direction: row; /* Changed to row for horizontal alignment */
+            align-items: center; /* Changed to center for vertical alignment */
             text-align: left;
             gap: 0.8rem;
             /* Space between icon, title, and text */
@@ -271,6 +312,7 @@
             /* Icon color */
             margin-bottom: 0;
             /* Remove default margin */
+            flex-shrink: 0; /* Prevent icon from shrinking */
         }
 
         .p-3 h3 {
@@ -324,6 +366,13 @@
 
             .sheet-item {
                 font-size: 1.2rem;
+                min-height: 400px; /* Adjusted for smaller screens */
+                width: 90%; /* Adjusted for smaller screens */
+                margin-right: 15px; /* Smaller gap */
+                padding: 1.5rem;
+            }
+            .sheet-item.center {
+                transform: scale(1.03); /* Less scale on smaller screens */
             }
 
             .sheet-item .icon {
@@ -340,6 +389,11 @@
 
             .p-3 h6.card-description-explain {
                 font-size: 0.95rem;
+            }
+            .carousel-control-btn {
+                width: 40px;
+                height: 40px;
+                font-size: 1.5rem;
             }
         }
 
@@ -405,17 +459,49 @@
 
             .sheet-item {
                 font-size: 1.1rem;
-                min-width: 85%;
-                height: 3.5in;
+                min-height: 350px; /* Adjusted for smaller screens */
+                width: 95%; /* Adjusted for smallest screens */
+                margin-right: 10px; /* Even smaller gap */
+                padding: 1.2rem;
             }
-
             .sheet-item.center {
-                min-width: 90%;
-                height: 4in;
+                transform: scale(1.01); /* Minimal scale on smallest screens */
             }
 
             .sheet-item .icon {
                 font-size: 2.5rem;
+            }
+            .carousel-control-btn {
+                width: 35px;
+                height: 35px;
+                font-size: 1.2rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .sheet-view-container {
+                min-height: 350px;
+            }
+            .sheet-item {
+                min-height: 300px; /* Adjusted for smallest screens */
+                width: 98%; /* Almost full width on very small screens */
+                margin-right: 5px; /* Very small gap */
+                padding: 1rem;
+            }
+            .sheet-item.center {
+                transform: scale(1.0); /* No scale on smallest screens */
+            }
+            .carousel-nav-buttons {
+                flex-direction: column; /* Stack buttons on very small screens */
+                gap: 10px;
+            }
+            .p-3 {
+                flex-direction: column; /* Stack icon and text vertically on very small screens */
+                align-items: center; /* Center align when stacked */
+                text-align: center;
+            }
+            .p-3 .card-icon {
+                margin-bottom: 0.5rem; /* Add some space below icon when stacked */
             }
         }
     </style>
@@ -445,7 +531,7 @@
 
     <div class="tooltip-div" id="tooltipDiv">
 
-
+        <br><br>
         <div class="segment-head mb-5">
             <h2 class="fw-bolder fs-2">What You Can Do ?</h2>
         </div>
@@ -453,12 +539,13 @@
 
 
 
-        <div class="text-start width-lg-80 mt-4">
+        <div class="text-start width-lg-80 mt-4 px-2">
             <div class="row">
                 <div class="mt-5 col-lg-6 col-md-6 d-flex">
                     <div class="d-flex align-items-start p-3">
                         <div class="me-3">
-                            
+                            <!-- Placeholder for icon, consider using Bootstrap Icons or Font Awesome -->
+                            <i class="bi bi-lightbulb-fill card-icon"></i>
                         </div>
                         <div>
                             <h3 class="fs-4 fw-bold mb-1">Validate Your Product Idea</h3>
@@ -473,7 +560,7 @@
                 <div class="mt-5 col-lg-6 col-md-6 d-flex">
                     <div class="d-flex align-items-start p-3">
                         <div class="me-3">
-                            <i class="bi bi-save2-fill fs-3 text-success"></i>
+                            <i class="bi bi-save2-fill card-icon"></i>
                         </div>
                         <div>
                             <h3 class="fs-4 fw-bold mb-1">Save Your Product Idea</h3>
@@ -499,20 +586,29 @@
 
         <div class="learndiv mt-4">
             <div class="width-lg-80">
-                <h3 class=" fs-4 ">Get Questions</h3>
+                <h3 class=" fs-4 px-2">Get Questions</h3>
                 <br>
-                <h3 class=" describe-text">Important Questions & Writing Space For Idea Validation</h3>
+                <h3 class=" describe-text px-2">Important Questions & Writing Space For Idea Validation</h3>
 
                 <br><br>
                 <div class="sheet-view-container">
                     <div class="sheet-view" id="sheetView"></div>
+                </div>
+                <!-- Navigation Buttons moved below the sheet-view-container -->
+                <div class="carousel-nav-buttons">
+                    <button class="carousel-control-btn" id="prevSheetBtn">
+                        <i class="bi bi-chevron-left"></i>
+                    </button>
+                    <button class="carousel-control-btn" id="nextSheetBtn">
+                        <i class="bi bi-chevron-right"></i>
+                    </button>
                 </div>
             </div>
         </div>
 
         <div class="section-separator"></div>
 
-        <div class="learndiv">
+        <div class="learndiv px-2">
             <div class="width-lg-80">
                 <h3 class=" fs-4 ">Example</h3>
                 <br>
@@ -564,6 +660,8 @@
             const learnMoreBtn = document.getElementById('learnMoreBtn');
             const tooltipDiv = document.getElementById('tooltipDiv');
             const sheetView = document.getElementById('sheetView');
+            const prevSheetBtn = document.getElementById('prevSheetBtn'); // New button reference
+            const nextSheetBtn = document.getElementById('nextSheetBtn'); // New button reference
             
             // Your new array to hold HTML content for the sliding cards
             const dynamicSheetContent = [
@@ -573,7 +671,7 @@
                 '<div><span>Revenue Model - How will you make money?</span></div>',
                 '<div><span>Key Partnerships - Who will help you succeed?</span></div>',
                 '<div><span>Operations - How will your product be delivered?</span></div>',
-                '<div><span>Market Opportunity - What is the size of the market?</span></div>',
+                '<div><div><span>Market Opportunity - What is the size of the market? This is a longer piece of text to test how the wrapping behaves within the card and to ensure that the height adjustments are sufficient for various content lengths. It should wrap nicely and not be cut off.</span></div></div>',
                 '<div><span>Competitive Advantage - What makes you better than competitors?</span></div>',
                 '<div><span>Future Vision - Where do you see this in 5 years?</span></div>',
                 '<div><span>Testing & Iteration - How will you test and improve?</span></div>'
@@ -582,7 +680,7 @@
             const numDivs = dynamicSheetContent.length; // Total number of divs based on your dynamic content
             let currentIndex; 
             let scrollInterval;
-            const numClones = numDivs; 
+            const numClones = 2; // Number of clones for infinite effect (at least 1, 2 for smoother transition)
 
             // Variables for manual dragging/swiping
             let isDragging = false;
@@ -640,10 +738,10 @@
                 const items = Array.from(sheetView.children);
                 if (items.length === 0) return;
 
-                // Calculate the width of a single item including its margins
+                // Calculate the width of a single item including its margin-right
                 const itemStyle = getComputedStyle(items[0]);
-                const itemWidth = items[0].offsetWidth + parseFloat(itemStyle.marginLeft) + parseFloat(itemStyle.marginRight);
-
+                const itemWidth = items[0].offsetWidth + parseFloat(itemStyle.marginRight);
+                
                 // Calculate the offset needed to center the current item
                 const offset = -currentIndex * itemWidth + (sheetView.offsetWidth / 2) - (itemWidth / 2);
                 sheetView.style.transform = `translateX(${offset}px)`;
@@ -662,7 +760,7 @@
             }
 
             /**
-             * Scrolls the carousel to the next div (for auto-scrolling).
+             * Scrolls the carousel to the next div.
              * Implements the infinite loop logic by resetting position when needed.
              */
             function scrollToNextDiv() {
@@ -673,6 +771,23 @@
                     currentIndex = numClones;
                     updateSheetView();
                     void sheetView.offsetWidth; 
+                    sheetView.style.transition = 'transform 0.5s ease-in-out';
+                }
+                updateSheetView();
+            }
+
+            /**
+             * Scrolls the carousel to the previous div.
+             * Implements the infinite loop logic by resetting position when needed.
+             */
+            function scrollToPreviousDiv() {
+                currentIndex--;
+
+                if (currentIndex < numClones) {
+                    sheetView.style.transition = 'none';
+                    currentIndex = numDivs + currentIndex; // Move to corresponding original item
+                    updateSheetView();
+                    void sheetView.offsetWidth;
                     sheetView.style.transition = 'transform 0.5s ease-in-out';
                 }
                 updateSheetView();
@@ -703,7 +818,7 @@
                 prevTranslate = parseFloat(transformMatrix.split(',')[4]) || 0;
                 currentTranslate = prevTranslate;
 
-                clearInterval(scrollInterval);
+                clearInterval(scrollInterval); // Stop auto-scroll on manual interaction
                 scrollInterval = null;
 
                 sheetView.style.transition = 'none';
@@ -756,6 +871,7 @@
 
                 updateSheetView();
 
+                // Resume auto-scroll after a short delay if tooltip is still visible
                 setTimeout(resumeAutoScroll, 1000);
             }
 
@@ -811,6 +927,14 @@
                         updateSheetView();
                     }
                 });
+            }
+
+            // Event listeners for new navigation buttons
+            if (prevSheetBtn) {
+                prevSheetBtn.addEventListener('click', scrollToPreviousDiv);
+            }
+            if (nextSheetBtn) {
+                nextSheetBtn.addEventListener('click', scrollToNextDiv);
             }
 
             window.addEventListener('resize', updateSheetView);
